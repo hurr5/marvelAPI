@@ -16,7 +16,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-id-generator": "^3.0.2",
-    "sass": "^1.69.5"
+    "sass": "^1.69.5",
+    "vercel": "^32.6.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
