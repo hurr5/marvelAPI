@@ -1,34 +1,67 @@
-import { useState, useEffect } from 'react';
+import { Component } from 'react';
 import './charInfo.scss';
 import PropTypes from 'prop-types'
 import Spinner from '../spinner/spinner';
 import ErrorMessage from '../errorMessage/errorMessage';
 import Skeleton from '../skeleton/Skeleton'
-import useMarvelService from '../../services/MarvelService';
+import MarvelService from '../../services/MarvelService';
 
-const CharInfo = (props) => {
-    const [char, setChar] = useState(null)
+class CharInfo extends Component {
 
-    const {loading, error, getCharacter, clearError} = useMarvelService();
+    state = {
+		char: null,
+		loading: false,
+		error: false,
+	}
 
-    useEffect(() => {
-        updateChar()
-    }, [props.charId])
+    marvelService = new MarvelService
 
-    const updateChar = () => {
-        clearError();
-        const { charId } = props;
+    componentDidMount() {
+        this.updateChar();
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.charId !== this.props.charId) {
+            this.updateChar()
+        }
+    }
+
+    updateChar = () => {
+        const { charId } = this.props;
         if (!charId) {
             return;
         }
 
-        getCharacter(charId)
-            .then(onCharLoaded)
+        this.onCharLoading();
+
+        this.marvelService
+            .getCharacter(charId)
+            .then(this.onCharLoaded)
+            .catch(this.onError)
     }
 
-    const onCharLoaded = (char) => {
-        setChar(char)
+    onCharLoaded = (char) => {
+		this.setState({
+			char, 
+			loading: false
+		})
 	}
+
+	onCharLoading = (char) => {
+		this.setState({
+			loading: true
+		})
+	}
+
+    onError = () => {
+		this.setState({
+			loading: false,
+			error: true
+		})
+	}
+
+    render() {
+        const {char, loading, error} = this.state
 
         const skeleton = char || loading || error ? null : <Skeleton/>
         const errorMessage = error ? <ErrorMessage/> : null;
@@ -43,6 +76,7 @@ const CharInfo = (props) => {
                 {content}
             </div>
         )
+    }
 }
 
 const View = ({char}) => {
