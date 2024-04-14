@@ -1,0 +1,45 @@
+@import '../../style/variables.scss';
+
+.search-form {
+  margin-top: 30px;
+  min-width: 425px;
+  height: 176px;
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.25);
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  &__label {
+    font-weight: bold;
+    font-size: 18px;
+  }
+  &__input {
+    margin-top: 15px;
+    width: 250px;
+    height: 38px;
+    border: none;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    padding: 10px;
+    margin-right: 24px;
+  }
+  &__submit {
+    background: rgb(159, 0, 19);
+    border: none;
+    color: white;
+  }
+  &__result {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+  }
+  &__success {
+    color: #03710E;
+    font-weight: bold;
+  }
+}
+
+.error {
+  color: #9F0013;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 25px;
+}
